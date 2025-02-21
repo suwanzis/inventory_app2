@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-<<<<<<< HEAD
 
 from .forms import CustomUserCreationForm
-=======
->>>>>>> 153ff9ae08447b625f99bf241b353818572ad063
 from .models import Product
 
 
@@ -16,20 +13,12 @@ def home(request):
 
 def register(request):
     if request.method == 'POST':
-<<<<<<< HEAD
         form = CustomUserCreationForm(request.POST)
-=======
-        form = UserCreationForm(request.POST)
->>>>>>> 153ff9ae08447b625f99bf241b353818572ad063
         if form.is_valid():
             form.save()
             return redirect('login')
     else:
-<<<<<<< HEAD
         form = CustomUserCreationForm()
-=======
-        form = UserCreationForm()
->>>>>>> 153ff9ae08447b625f99bf241b353818572ad063
     return render(request, 'register.html', {'form': form})
 
 def user_login(request):
