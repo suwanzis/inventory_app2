@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}库存列表{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">库存列表</h1>
+    <a href="{% url 'logout' %}" class="btn btn-danger">退出登录</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>商品名称</th>
+                <th>数量</th>
+                <th>价格</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

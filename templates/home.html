@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}首页{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">欢迎来到超市库存管理系统</h1>
+    <a href="{% url 'login' %}" class="btn btn-primary">登录</a>
+    <a href="{% url 'register' %}" class="btn btn-secondary">注册</a>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}注册{% endblock %}
+
+{% block content %}
+<<<<<<< HEAD
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 400px;">
+        <h2 class="text-center mb-4">注册</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_username" class="form-label">{{ form.username.label }}</label>
+                <div class="col-12">
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_email" class="form-label">{{ form.email.label }}</label>
+                <div class="col-12">
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_phone_number" class="form-label">{{ form.phone_number.label }}</label>
+                <div class="col-12">
+                    {{ form.phone_number }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">{{ form.password1.label }}</label>
+                <div class="col-12">
+                    {{ form.password1 }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">{{ form.password2.label }}</label>
+                <div class="col-12">
+                    {{ form.password2 }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">注册</button>
+        </form>
+        <p class="text-center mt-3">已有账号？ <a href="{% url 'login' %}">登录</a></p>
+    </div>
+</div>
+=======
+    <h1 class="mt-5">注册</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">注册</button>
+    </form>
+    <p>已有账号？ <a href="{% url 'login' %}">登录</a></p>
+>>>>>>> 153ff9ae08447b625f99bf241b353818572ad063
+{% endblock %}
