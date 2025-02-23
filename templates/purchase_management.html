@@ -1,0 +1,75 @@
+<!-- 1111/inventory_app/templates/purchase_management.html -->
+{% extends 'base.html' %}
+
+{% block title %}采购管理{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">采购管理</h1>
+    <!-- 添加搜索框 -->
+    <form method="get" action="{% url 'purchase_management' %}" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="搜索采购申请" value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-outline-secondary">搜索</button>
+        </div>
+    </form>
+    <!-- 将按钮部分放在“采购管理页面”字样下方，并添加一些样式使其靠左，调整上下间距 -->
+    <div class="d-flex justify-content-start mt-2 mb-3">
+        <a href="{% url 'purchase_application' %}" class="btn btn-primary me-2">采购申请</a>
+        {% if user.is_superuser %}
+            <a href="{% url 'purchase_approval' %}" class="btn btn-primary">采购审批</a>
+        {% endif %}
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>商品名称</th>
+                <th>采购数量</th>
+                <th>申请人</th>
+                <th>是否审批</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td>{{ application.product.name }}</td>
+                    <td>{{ application.quantity }}</td>
+                    <td>{{ application.user.username }}</td>
+                    <td>
+                        {% if application.approved %}
+                            已审批
+                        {% else %}
+                            未审批
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- 分页导航 -->
+    <nav aria-label="Page navigation" class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if applications.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; 首页</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ applications.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">上一页</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">第 {{ applications.number }} 页，共 {{ applications.paginator.num_pages }} 页</span>
+            </li>
+
+            {% if applications.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ applications.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">下一页</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ applications.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">末页 &raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <!-- 这里可以添加采购管理相关的内容 -->
+{% endblock %}

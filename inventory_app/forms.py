@@ -1,6 +1,7 @@
 # inventory_app2/inventory_app/forms.py
 from django import forms
 from django.contrib.auth.models import User
+from .models import Profile  # 导入 Profile 模型
 
 class CustomUserCreationForm(forms.Form):
     username = forms.CharField(label='用户名', max_length=150)
@@ -29,8 +30,16 @@ class CustomUserCreationForm(forms.Form):
         return password2
 
     def save(self):
-        username = self.cleaned_data.get('username')
-        email = self.cleaned_data.get('email')
-        password = self.cleaned_data.get('password1')
-        user = User.objects.create_user(username=username, email=email, password=password)
-        return user
+        try:
+            username = self.cleaned_data.get('username')
+            email = self.cleaned_data.get('email')
+            password = self.cleaned_data.get('password1')
+            phone_number = self.cleaned_data.get('phone_number')
+            user = User.objects.create_user(username=username, email=email, password=password)
+            # 创建或更新用户的 Profile 信息
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.phone_number = phone_number
+            profile.save()
+            return user
+        except Exception as e:
+            raise forms.ValidationError(f'注册失败：{str(e)}')

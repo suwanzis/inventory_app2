@@ -1,0 +1,30 @@
+<!-- myapp/templates/edit_single_supplier.html -->
+{% extends 'base.html' %}
+
+{% block title %}编辑单个供应商{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">编辑供应商信息</h1>
+    <form method="post" action="{% url 'edit_single_supplier' supplier.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="supplier_name" class="form-label">供应商名称</label>
+            <input type="text" id="supplier_name" name="supplier_name" value="{{ supplier.name }}" required class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">电话</label>
+            <input type="text" id="phone" name="phone" value="{{ supplier.phone }}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">邮箱</label>
+            <input type="email" id="email" name="email" value="{{ supplier.email }}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">地址</label>
+            <input type="text" id="address" name="address" value="{{ supplier.address }}" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <!-- 添加返回按钮，改为蓝色，放置在保存按钮的右边，注意间隔 -->
+        <a href="{% url 'edit_supplier' %}" class="btn btn-primary ms-2">返回</a>
+    </form>
+{% endblock %}

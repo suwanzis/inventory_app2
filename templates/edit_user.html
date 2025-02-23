@@ -1,0 +1,25 @@
+<!-- 1111/inventory_app/templates/edit_user.html -->
+{% extends 'base.html' %}
+
+{% block title %}编辑用户信息{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">编辑用户信息</h1>
+    <form method="post" action="{% url 'edit_user' user.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">用户名</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">邮箱</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">手机号</label>
+            <input type="text" id="phone_number" name="phone_number" value="{{ user.profile.phone_number }}" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="{% url 'user_management' %}" class="btn btn-secondary ms-2">返回</a>
+    </form>
+{% endblock %}

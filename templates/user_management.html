@@ -1,0 +1,52 @@
+<!-- 1111/inventory_app/templates/user_management.html -->
+<!-- 继承基础模板base.html -->
+{% extends 'base.html' %}
+
+<!-- 定义页面标题为用户管理 -->
+{% block title %}用户管理{% endblock %}
+
+<!-- 定义页面内容 -->
+{% block content %}
+    <!-- 显示用户管理的标题，设置顶部外边距为5 -->
+    <h1 class="mt-5">用户管理</h1>
+    <!-- 如果当前用户是超级用户，则显示导出用户数据为CSV的按钮 -->
+    {% if user.is_superuser %}
+        <a href="{% url 'export_users_csv' %}" class="btn btn-primary mb-3">导出所有用户数据</a>
+    {% endif %}
+    <!-- 创建一个带有边框的表格 -->
+    <table class="table table-bordered">
+        <!-- 表格头部 -->
+        <thead>
+            <tr>
+                <!-- 用户名表头 -->
+                <th>用户名</th>
+                <!-- 邮箱表头 -->
+                <th>邮箱</th>
+                <!-- 手机号表头 -->
+                <th>手机号</th>
+                <!-- 操作表头 -->
+                <th>操作</th>
+            </tr>
+        </thead>
+        <!-- 表格主体 -->
+        <tbody>
+            <!-- 遍历用户信息列表 -->
+            {% for user_info in user_info_list %}
+            <tr>
+                <!-- 显示用户的用户名 -->
+                <td>{{ user_info.user.username }}</td>
+                <!-- 显示用户的邮箱 -->
+                <td>{{ user_info.email }}</td>
+                <!-- 显示用户的手机号 -->
+                <td>{{ user_info.phone_number }}</td>
+                <td class="text-end">
+                    <!-- 编辑按钮，链接到编辑用户页面，按钮颜色改为蓝色（btn-primary） -->
+                    <a href="{% url 'edit_user' user_info.user.id %}" class="btn btn-primary me-2">编辑</a>
+                    <!-- 删除按钮，链接到删除用户页面，按钮颜色为红色（btn-danger） -->
+                    <a href="{% url 'delete_user' user_info.user.id %}" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

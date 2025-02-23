@@ -1,0 +1,57 @@
+<!-- myapp/templates/edit_supplier.html -->
+{% extends 'base.html' %}
+
+{% block title %}编辑供应商{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">添加供应商</h1>
+    <form method="post" action="{% url 'edit_supplier' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="supplier_name" class="form-label">供应商名称</label>
+            <input type="text" id="supplier_name" name="supplier_name" required class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">电话</label>
+            <input type="text" id="phone" name="phone" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">邮箱</label>
+            <input type="email" id="email" name="email" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">地址</label>
+            <input type="text" id="address" name="address" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <!-- 添加返回按钮，改为蓝色，放置在保存按钮的右边，注意间隔 -->
+        <a href="javascript:history.back()" class="btn btn-primary ms-2">返回</a>
+    </form>
+
+    <!-- 显示已有的供应商列表 -->
+    <h2 class="mt-5">已有供应商列表</h2>
+    <table class="table table-striped table-bordered">  <!-- 这里添加了 table-bordered 类 -->
+        <thead>
+            <tr>
+                <th>供应商名称</th>
+                <th>电话</th>
+                <th>邮箱</th>
+                <th>地址</th>
+                <th>操作</th>  <!-- 添加操作列 -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.phone }}</td>
+                    <td>{{ supplier.email }}</td>
+                    <td>{{ supplier.address }}</td>
+                    <td style="text-align: center;">  <!-- 添加内联样式 -->
+                        <a href="{% url 'edit_single_supplier' supplier.id %}" class="btn btn-sm btn-primary">编辑</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

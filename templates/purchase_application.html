@@ -1,0 +1,33 @@
+<!-- myapp/templates/purchase_application.html -->
+{% extends 'base.html' %}
+
+{% block title %}采购申请{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">采购申请</h1>
+    <!-- 添加搜索框 -->
+    <form method="get" action="{% url 'purchase_application' %}" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="搜索商品" value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-outline-secondary">搜索</button>
+        </div>
+    </form>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="product" class="form-label">选择商品</label>
+            <select id="product" name="product" required class="form-control">
+                {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="quantity" class="form-label">采购数量</label>
+            <input type="number" id="quantity" name="quantity" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">提交申请</button>
+        <!-- 添加蓝色返回按钮 -->
+        <a href="javascript:history.back()" class="btn btn-primary ms-2">返回</a>
+    </form>
+{% endblock %}

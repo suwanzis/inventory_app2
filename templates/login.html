@@ -1,27 +1,53 @@
 {% extends 'base.html' %}
 
+<!-- 设置页面标题为登录 -->
 {% block title %}登录{% endblock %}
 
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-lg" style="width: 400px;">
-        <h2 class="text-center mb-4">登录</h2>
-        {% if error_message %}
-            <p class="text-danger text-center">{{ error_message }}</p>
-        {% endif %}
-        <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="username" class="form-label">用户名:</label>
-                <input type="text" id="username" name="username" required class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">密码:</label>
-                <input type="password" id="password" name="password" required class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary w-100">登录</button>
-        </form>
-        <p class="text-center mt-3">没有账号？ <a href="{% url 'register' %}">注册</a></p>
+    <!-- 外层容器，使用Bootstrap的弹性布局类，使内容在水平和垂直方向上都居中显示，vh-100表示容器高度为视口高度的100% -->
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <!-- 卡片组件，添加内边距和阴影效果，设置卡片宽度为400px -->
+        <div class="card p-4 shadow-lg" style="width: 400px;">
+            <!-- 卡片标题，水平居中显示，并设置底部外边距为4 -->
+            <h2 class="text-center mb-4">登录</h2>
+
+            <!-- 消息显示区域 -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- 如果存在错误信息，显示错误信息，文本颜色为红色且水平居中 -->
+            {% if error_message %}
+                <p class="text-danger text-center">{{ error_message }}</p>
+            {% endif %}
+
+            <!-- 登录表单，使用POST方法提交数据 -->
+            <form method="post">
+                <!-- Django的跨站请求伪造保护令牌 -->
+                {% csrf_token %}
+                <!-- 用户名输入框的容器，设置底部外边距为3 -->
+                <div class="mb-3">
+                    <!-- 用户名输入框的标签 -->
+                    <label for="username" class="form-label">用户名:</label>
+                    <!-- 用户名输入框，设置为文本类型，id和name属性用于标识输入框，required表示该输入框为必填项，使用Bootstrap的表单控件样式 -->
+                    <input type="text" id="username" name="username" required class="form-control">
+                </div>
+                <!-- 密码输入框的容器，设置底部外边距为3 -->
+                <div class="mb-3">
+                    <!-- 密码输入框的标签 -->
+                    <label for="password" class="form-label">密码:</label>
+                    <!-- 密码输入框，设置为密码类型，id和name属性用于标识输入框，required表示该输入框为必填项，使用Bootstrap的表单控件样式 -->
+                    <input type="password" id="password" name="password" required class="form-control">
+                </div>
+                <!-- 登录按钮，设置为按钮类型，使用Bootstrap的主要按钮样式，宽度为100% -->
+                <button type="submit" class="btn btn-primary w-100">登录</button>
+            </form>
+            <!-- 提示文本，水平居中显示，设置顶部外边距为3 -->
+            <p class="text-center mt-3">没有账号？ <a href="{% url 'register' %}">注册</a></p>
+        </div>
     </div>
-</div>
 {% endblock %}

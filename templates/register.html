@@ -1,46 +1,75 @@
 {% extends 'base.html' %}
 
-{% block title %}注册{% endblock %}
+{% block title %}
+    注册
+{% endblock %}
 
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-lg" style="width: 400px;">
-        <h2 class="text-center mb-4">注册</h2>
-        <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="id_username" class="form-label">{{ form.username.label }}</label>
-                <div class="col-12">
-                    {{ form.username }}
+    <!-- 外层容器，使用 d-flex 和 align-items-center、justify-content-center 实现垂直和水平居中 -->
+    <div class="container d-flex align-items-center justify-content-center vh-100">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- 卡片组件，添加内边距和阴影效果 -->
+                <div class="card p-4 shadow-lg" style="width: 400px;">
+                    <!-- 卡片标题 -->
+                    <h2 class="text-center mb-4">注册</h2>
+
+                    <!-- 消息显示区域 -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- 错误信息提示 -->
+                    {% if error_message %}
+                        <p class="text-danger text-center">{{ error_message }}</p>
+                    {% endif %}
+
+                    <!-- 注册表单 -->
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- 用户名输入框 -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">用户名:</label>
+                            <input type="text" id="username" name="username" required class="form-control">
+                        </div>
+
+                        <!-- 邮箱输入框 -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">邮箱:</label>
+                            <input type="email" id="email" name="email" required class="form-control">
+                        </div>
+
+                        <!-- 手机号输入框 -->
+                        <div class="mb-3">
+                            <label for="phone_number" class="form-label">手机号:</label>
+                            <input type="tel" id="phone_number" name="phone_number" required class="form-control">
+                        </div>
+
+                        <!-- 密码输入框 -->
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">密码:</label>
+                            <input type="password" id="password1" name="password1" required class="form-control">
+                        </div>
+
+                        <!-- 确认密码输入框 -->
+                        <div class="mb-3">
+                            <label for="password2" class="form-label">确认密码:</label>
+                            <input type="password" id="password2" name="password2" required class="form-control">
+                        </div>
+
+                        <!-- 注册按钮 -->
+                        <button type="submit" class="btn btn-primary w-100">注册</button>
+                    </form>
+
+                    <!-- 跳转到登录页面的提示 -->
+                    <p class="text-center mt-3">已经有账号？ <a href="{% url 'login' %}">登录</a></p>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="id_email" class="form-label">{{ form.email.label }}</label>
-                <div class="col-12">
-                    {{ form.email }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="id_phone_number" class="form-label">{{ form.phone_number.label }}</label>
-                <div class="col-12">
-                    {{ form.phone_number }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="id_password1" class="form-label">{{ form.password1.label }}</label>
-                <div class="col-12">
-                    {{ form.password1 }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="id_password2" class="form-label">{{ form.password2.label }}</label>
-                <div class="col-12">
-                    {{ form.password2 }}
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">注册</button>
-        </form>
-        <p class="text-center mt-3">已有账号？ <a href="{% url 'login' %}">登录</a></p>
+        </div>
     </div>
-</div>
 {% endblock %}

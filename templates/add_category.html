@@ -1,0 +1,24 @@
+<!-- myapp/templates/add_category.html -->
+{% extends 'base.html' %}
+
+{% block title %}添加商品类别{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">添加商品类别</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="category_name" class="form-label">商品类别名称</label>
+            <input type="text" id="category_name" name="category_name" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">添加</button>
+        <!-- 添加返回按钮，设置间隔 -->
+        <a href="javascript:history.back()" class="btn btn-primary ms-2">返回</a>
+    </form>
+    <h2 class="mt-4">已有商品类别</h2>
+    <ul class="list-group">
+        {% for category in categories %}
+            <li class="list-group-item">{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
